@@ -28,10 +28,7 @@ public class CurrencyExchangeController {
 	
 	@Autowired
 	private CurrencyExchangeDao currencyExchangeDao;
-	
-//	@Autowired
-//	private LimitsServiceFeignProxy limitsServiceFeignProxy;
-	
+		
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	public ExchangeValueBean retrieveExchangeValue(@PathVariable String from, @PathVariable String to) {
 		

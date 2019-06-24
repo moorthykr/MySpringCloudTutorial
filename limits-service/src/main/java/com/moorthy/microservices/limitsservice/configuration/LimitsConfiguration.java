@@ -20,4 +20,5 @@ public class LimitsConfiguration {
 
 	private int minimum;
 	private int maximum;
+	
 }
