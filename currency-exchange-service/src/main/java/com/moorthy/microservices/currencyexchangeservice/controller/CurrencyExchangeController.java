@@ -16,18 +16,22 @@ import com.moorthy.microservices.currencyexchangeservice.entity.CurrencyLimits;
 import com.moorthy.microservices.currencyexchangeservice.entity.ExchangeValue;
 import com.moorthy.microservices.currencyexchangeservice.entity.ExchangeValueBean;
 
+import ch.qos.logback.classic.Logger;
+
 @RestController
 public class CurrencyExchangeController {
 	private long id = 1l;
 	private String from;
 	private String to;
 	private BigDecimal exchangeMultiple;
-	
+	Logger logger = null;
+
 	@Autowired
 	private Environment environment;
 	
 	@Autowired
 	private CurrencyExchangeDao currencyExchangeDao;
+	
 		
 	@GetMapping("/currency-exchange/from/{from}/to/{to}")
 	public ExchangeValueBean retrieveExchangeValue(@PathVariable String from, @PathVariable String to) {
@@ -42,6 +46,7 @@ public class CurrencyExchangeController {
 		CurrencyLimits currencyLimits = getCurrencyLimits();
 		ExchangeValueBean exchangeValueBean = 
 				new ExchangeValueBean(exchangeValue.getId(), from, to, exchangeValue.getExchangeMultiple(), port, currencyLimits.getMinimum(), currencyLimits.getMaximum()); 
+		logger.info("{}", exchangeValue);
 		return exchangeValueBean;
 	}
 	
@@ -49,7 +54,6 @@ public class CurrencyExchangeController {
 		ResponseEntity<CurrencyLimits> response = new RestTemplate().getForEntity("http://localhost:8080/limits",CurrencyLimits.class);
 		
 		CurrencyLimits currencyLimits = response.getBody();
-		
 		return currencyLimits;
 		
 	}

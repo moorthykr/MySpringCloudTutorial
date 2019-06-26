@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ import com.moorthy.microservices.currencyexchangeservice.entity.ExchangeValueBea
 
 @RestController
 public class CurrencyConversionController {
-	
+	Logger logger = null;
 	@Autowired
 	private Environment environment;
 
@@ -46,6 +47,8 @@ public class CurrencyConversionController {
 		CurrencyConversionBean response = responseEntity.getBody();
 
 		CurrencyConversionBean currencyConversionBean = formatCurrencyConversionBean(from, to, quantity, response); 
+		
+		logger.info("{}", response);
 		
 		return currencyConversionBean;	
 	}
